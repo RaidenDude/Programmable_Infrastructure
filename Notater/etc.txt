@@ -1,0 +1,4 @@
+SSH session-manager: tmux
+Attach to previous session: tmux a
+Detach from session: CTRL+B, CTRL+D
+

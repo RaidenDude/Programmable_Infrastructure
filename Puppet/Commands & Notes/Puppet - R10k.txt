@@ -1,0 +1,9 @@
+R10k deploy alle miljøer:
+r10k deploy environment -pv
+
+Spesifikt miljø:
+r10k deploy environment *MILJØ* -pv
+
+Bytte miljø på server:
+puppet config set environment *MILJØ* --section agent
+

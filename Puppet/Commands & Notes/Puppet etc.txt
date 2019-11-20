@@ -1,0 +1,38 @@
+Installere Puppet agent med Hjelmås sin metode:
+wget https://apt.puppetlabs.com/puppet6-release-bionic.deb
+sudo dpkg -i puppet6-release-bionic.deb
+sudo apt-get update
+sudo apt-get install puppet-agent
+echo 'export PATH=$PATH:/opt/puppetlabs/bin/' >> ~/.bashrc
+. ~/.bashrc
+
+Sjekke filegenskaper:
+sudo puppet resource file /tmp/test    (Ensure => 'absent' vil si at filen ikke finnes.)
+
+Endre innhold på fil:
+sudo puppet resource file /tmp/test content='Hello Puppet!'
+
+Manuellt sette i gang et agent run (Endrer server-state slik den skal være, kjøres normalt automatisk hver halvtime):
+sudo puppet agent -t
+
+Liste sertifikat:
+puppetserver ca list
+
+Signere sertifikat:
+puppetserver ca sign --certname agent.puppet.vm
+
+Apply manifests:
+sudo puppet apply /tmp/hello.pp 
+
+Finne modulepath:
+puppet config print modulepath
+(første = prod, andre = alle miljøer, tredje = moduler for puppet-config)
+
+Validere syntax:
+puppet parser validate init.pp
+
+Teste endringer (uten å faktisk gjennomføre dem):
+sudo puppet agent -t --noop
+
+Liste opp alle installerte moduler:
+puppet module list

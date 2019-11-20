@@ -1,0 +1,9 @@
+Bolt commands:
+bolt command run 'linux_kommando' --nodes 'servere_som_skal_kjøre_kommando'
+F. eks: bolt command run hostname --nodes docker://bolt.puppet.vm
+
+Kan formatere bolt output til f.eks JSON:
+bolt --format json command run 'cat /etc/hosts' --nodes docker://bolt.puppet.vm
+
+Installere puppet agent:
+bolt command run "sh -c 'curl -k https://learning.puppetlabs.vm:8140/packages/current/install.bash | sudo bash'" --nodes docker://hello.puppet.vm

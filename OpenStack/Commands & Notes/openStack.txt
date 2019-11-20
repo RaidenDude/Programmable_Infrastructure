@@ -1,0 +1,37 @@
+SkyHigh URL: https://skyhigh.iik.ntnu.no/horizon/home/
+
+Upload to SSH-server: SCP "filename.sh" stiabra@login.stud.ntnu.no:
+
+Add auth-url: ". filename.sh"
+F. eks: . IMT3005_H19_stiabra_service-openrc.sh
+
+View keypairs: Openstack keypair list
+
+Hente passord fra server:
+nova get-password "ServerNavn" Stiabra.pem
+
+Lage nettverk, og route til NTNU-internal:
+network create net1
+subnet create subnet1 --network net1 --subnet-range 192.168.1.0/24
+router create router1
+router set router1 --external-gateway ntnu-internal
+router add subnet router1 subnet1
+
+Lage server:
+server create --image "image-ID" --flavor "flavor-ID" --nic net-id="ID" --key-name Stiabra "ServerNavn"
+Får image-ID fra 'image list', flavor-ID fra 'flavor list', net-ID fra 'network list' -> net1.
+F. eks: server create --image "Puppet Learning VM 2019.0.2 6.10" --flavor m1.small --nic net-id=9375b2d9-de85-4693-bc29-e5e88f06bd40 --key-name Stiabra PuppetLearningVM
+
+Lage og assigne floating IPs:
+floating ip create 'nettverk'
+server add floating ip 'serverNavn' 'IP'
+F. eks: floating ip create ntnu-internal
+server add floating ip PuppetLearningVM 10.212.136.161
+
+Sette security group for å tillatte/blokkere porter:
+server add security group 'server' 'group'
+F. eks: server add security group PuppetLearningVM linux
+
+Lage stack fra template & environment:
+stack create -t 'template.yaml' -e 'environment.yaml' 'stack_navn'
+F. eks: stack create -t custom-heat-templates/servers_in_new_neutron_net.yaml -e heat-environment/heat_demo_env.yaml heat_demo_modified

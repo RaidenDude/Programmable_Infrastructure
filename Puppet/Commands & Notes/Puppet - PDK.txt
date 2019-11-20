@@ -1,0 +1,10 @@
+Lage modul: pdk new module 'modulnavn' (Legges i /etc/puppetlabs/code/environments/production/modules/modulnavn)
+
+Lage klasse: pdk new class 'klassenavn' (NB: Må være i en moduldirectory)
+Klassefiler lages som manifester i modulnavn/manifests/klassenavn.pp, i tillegg til test-filer i modulnavn/spec/classes/klassenavn_spec.rb.
+
+Kjøre unit-test: pdk test unit
+
+Hente ut puppet rapporter fra alle servere:
+ls -R /opt/puppetlabs/server/data/puppetserver/reports/
+
